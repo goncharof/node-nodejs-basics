@@ -1,19 +1,11 @@
-import { writeFile, access, constants } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { dirname } from 'path';
-
-const checkIfFileExists = async (filename) => {
-  try {
-    await access(filename, constants.F_OK);
-    return true;
-  } catch {
-    return false;
-  }
-}
+import isPathExists from './helpers/isPathExists.js';
 
 const create = async () => {
   const filename = `${dirname(import.meta.filename)}/files/freshFile.txt`;
 
-  if (await checkIfFileExists(filename)) {
+  if (await isPathExists(filename)) {
     throw new Error('FS operation failed');
   }
 
