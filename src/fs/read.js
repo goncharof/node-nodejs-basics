@@ -1,8 +1,8 @@
-import { dirname } from 'path';
 import { readFile } from 'node:fs/promises';
+import { extendedDirname } from '../helpers/__path.js';
 
 const read = async () => {
-  const filename = `${dirname(import.meta.filename)}/files/fileToRead.txt`;
+  const filename = extendedDirname(import.meta.url, 'files', 'fileToRead.txt');
 
   try {
     const contents = await readFile(filename, 'utf8');

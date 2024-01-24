@@ -1,8 +1,8 @@
-import { dirname } from 'path';
 import { rm } from 'node:fs/promises';
+import { extendedDirname } from '../helpers/__path.js';
 
 const remove = async () => {
-  const filename = `${dirname(import.meta.filename)}/files/xxx.txt`;
+  const filename = extendedDirname(import.meta.url, 'files', 'fileToRemove.txt');
 
   try {
     await rm(filename, { force: false })
