@@ -1,10 +1,12 @@
 import { createRequire } from "module";
-import { dirname, sep } from 'node:path';
+import { sep } from 'node:path';
 import { release, version } from 'node:os';
 import { createServer as createServerHttp } from 'node:http';
 import { fileURLToPath } from "node:url";
-import './files/c.js';
 import { extendedDirname } from "../helpers/__path.js";
+
+import './files/c.js';
+
 
 const require = createRequire(import.meta.url);
 const random = Math.random();
@@ -12,7 +14,6 @@ const random = Math.random();
 let unknownObject;
 
 if (random > 0.5) {
-  // unknownObject = require(`${dirname(import.meta.filename)}/files/a.json`);
   unknownObject = require(extendedDirname(import.meta.url, 'files', 'a.json'));
 } else {
   unknownObject = require(extendedDirname(import.meta.url, 'files', 'b.json'));
@@ -25,9 +26,7 @@ console.log(`Path segment separator is "${sep}"`);
 console.log(`Path to current file is ${fileURLToPath(import.meta.url)}`);
 console.log(`Path to current directory is ${extendedDirname(import.meta.url)}`);
 
-const myServer = createServerHttp((_, res) => {
-  res.end('Request accepted');
-});
+const myServer = createServerHttp((_, res) => res.end('Request accepted'));
 
 const PORT = 3000;
 
