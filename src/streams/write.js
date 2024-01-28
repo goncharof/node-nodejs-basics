@@ -3,10 +3,12 @@ import { stdin } from 'node:process';
 import { extendedDirname } from '../helpers/__path.js';
 
 const write = async () => {
-  const fd = await open(extendedDirname(import.meta.url, 'files', 'fileToWrite.txt'), 'w');
-  const ws = fd.createWriteStream();
+  const ws = (await open(extendedDirname(import.meta.url, 'files', 'fileToWrite.txt'), 'w'))
+    .createWriteStream();
   
-  stdin.on('data', (chunk) => ws.write(chunk.toString('utf-8')));
+  stdin
+    .on('data', (chunk) => ws.write(chunk.toString('utf-8')))
+    .on('error', (err) => console.error(err));
 };
 
 await write();
