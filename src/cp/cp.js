@@ -9,8 +9,8 @@ const spawnChildProcess = async (args) => {
     { stdio: ['pipe', 'pipe', 'pipe', 'ipc'] }
   );
     
-  stdin.pipe(cp.stdin);
-  cp.stdout.pipe(stdout);
+  stdin.pipe(cp.stdin).on('error', (err) => console.error(err));
+  cp.stdout.pipe(stdout).on('error', (err) => console.error(err));
 };
   
 // Put your arguments in function call to test this functionality
